@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
   "name": "CrunchyrollSpoilerStopper",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Removes all thumbnails while browsing crunchyroll.com",
   "icons": {
-    "48": "icons/icon-48.png"
+    "128": "icons/icon-128.png"
   },
   "content_scripts": [
     {
@@ -23,7 +23,7 @@
   },
   "browser_action": {
     "default_icon": {
-      "48": "icons/icon-48.png"
+      "128": "icons/icon-128.png"
     }
   },
   "permissions": [

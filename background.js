@@ -12,12 +12,12 @@ function updateLocalStorage() {
 
         if (settings.status == true) {
             browser.storage.local.set({ status: false });
-            browser.browserAction.setIcon({ path: "icons/icon_off-48.png" });
+            browser.browserAction.setIcon({ path: "icons/icon_off-128.png" });
         }
 
         if (settings.status == false) {
             browser.storage.local.set({ status: true });
-            browser.browserAction.setIcon({ path: "icons/icon-48.png" });
+            browser.browserAction.setIcon({ path: "icons/icon-128.png" });
 
         }
     })
