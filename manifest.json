@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "CrunchyrollSpoilerStopper",
+  "version": "1.0.1",
+  "description": "Removes all thumbnails while browsing crunchyroll.com",
+  "icons": {
+    "48": "icons/icon-48.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.crunchyroll.com/*"
+      ],
+      "js": [
+        "content_scripts/main.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": {
+      "48": "icons/icon-48.png"
+    }
+  },
+  "permissions": [
+    "storage"
+  ]
+}
