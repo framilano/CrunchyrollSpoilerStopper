@@ -48,6 +48,10 @@ observer = new MutationObserver(callback);
 // Retrieving status from local storage when loading the site
 const gettingStoredSettings = browser.storage.local.get();
 gettingStoredSettings.then((settings) => {
+    if (settings.status == null || settings.status == undefined) {
+        browser.storage.local.set({ status: true })
+        observer.observe(document, config);
+    }
 
     if (settings.status == true) observer.observe(document, config);
 
