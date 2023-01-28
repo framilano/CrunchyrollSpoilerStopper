@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Crunchyroll Spoiler Stopper",
-  "version": "1.0.6",
-  "description": "Removes all thumbnails while browsing crunchyroll.com",
+  "version": "1.1.0",
+  "description": "Removes all thumbnails and titles while browsing crunchyroll.com",
   "icons": {
     "128": "icons/icon-128.png"
   },
@@ -12,7 +12,11 @@
         "https://www.crunchyroll.com/*"
       ],
       "js": [
-        "content_scripts/main.js"
+        "content_scripts/thumbnails.js",
+        "content_scripts/titles.js"
+      ],
+      "css": [
+        "content_scripts/titles.css"
       ]
     }
   ],
@@ -25,7 +29,8 @@
   "browser_action": {
     "default_icon": {
       "128": "icons/icon-128.png"
-    }
+    },
+    "default_popup": "popup/popup.html"
   },
   "permissions": [
     "storage"
