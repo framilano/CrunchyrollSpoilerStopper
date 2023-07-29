@@ -2,12 +2,11 @@
 // Hides titles
 function hide_titles() {
     titles = document.querySelectorAll(`
-    [class^="playable-card-static__title-link"],[class*=" playable-card-static__title-link"],
+    [class^="playable-card__title-link"],[class*=" playable-card__title-link"],
     [class^="playable-card-mini-static__title-link"],[class*=" playable-card-mini-static__title-link"]
     `);
     titles.forEach(el => {
         text_pieces = el.innerText.split(' ')
-        console.log(text_pieces[1])
         if (text_pieces[1] == undefined || text_pieces[1] == 'undefined' || text_pieces[1] == '-')
             el.innerText = text_pieces[0]
         else 
@@ -19,9 +18,9 @@ function hide_titles() {
 const title_callback = (mutationList, title_observer) => {
     for (const mutation of mutationList) {
         if(mutation.target.className.includes("playable-thumbnail")) continue;
-        if(mutation.target.className.includes("playable-card-static__title-link")) continue;
+        if(mutation.target.className.includes("playable-card__title-link")) continue;
         if(mutation.target.className.includes("playable-card-mini-static__title-link")) continue;
-        
+
         hide_titles();
     }
 };

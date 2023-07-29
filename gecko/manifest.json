@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Crunchyroll Spoiler Stopper",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Removes all thumbnails and titles while browsing crunchyroll.com",
   "icons": {
     "128": "icons/icon-128.png"

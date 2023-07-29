@@ -21,7 +21,7 @@ function show_thumbnails() {
 const thumb_callback = (mutationList, thumb_observer) => {
     for (const mutation of mutationList) {
         if(mutation.target.className.includes("playable-thumbnail")) continue;
-        if(mutation.target.className.includes("playable-card-static__title-link")) continue;
+        if(mutation.target.className.includes("playable-card__title-link")) continue;
         if(mutation.target.className.includes("playable-card-mini-static__title-link")) continue;
         
         hide_thumbnails();
