@@ -2,22 +2,10 @@ const titles_box = document.getElementById("hide_titles")
 const thumbs_box = document.getElementById("hide_thumbs")
 
 titles_box.addEventListener('change', () => {
-    browser.storage.local.set(
-        { 
-            changed: "titles",
-            hide_thumbs: thumbs_box.checked,
-            hide_titles: titles_box.checked
-        }
-    )
+    browser.storage.local.set({ hide_titles: titles_box.checked})
 })
 thumbs_box.addEventListener('change', () => {
-    browser.storage.local.set(
-        { 
-            changed: "thumbs",
-            hide_thumbs: thumbs_box.checked,
-            hide_titles: titles_box.checked
-        }
-    )
+    browser.storage.local.set({ hide_thumbs: thumbs_box.checked,})
 })
 
 function loadSavedSettings() {
@@ -36,7 +24,6 @@ function loadSavedSettings() {
         thumbs_box.checked = settings.hide_thumbs
         titles_box.checked = settings.hide_titles
     })
-
 }
 
 loadSavedSettings()

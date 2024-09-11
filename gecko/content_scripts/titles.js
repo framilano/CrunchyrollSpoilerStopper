@@ -28,15 +28,17 @@ const title_callback = (mutationList, _title_observer) => {
 };
 
 // Whenever the setting has changed (someone clicked on the action icon) shows or hides thumbnails
-browser.storage.local.onChanged.addListener(async (_changes) => {
+browser.storage.local.onChanged.addListener(async (changes) => {
     let hide_titles_value = await browser.storage.local.get("hide_titles")
 
-    if (!hide_titles_value["hide_titles"]) {
-        title_observer.disconnect()
-        location.reload(); 
-    } else {
-        title_observer.observe(document,title_config);
-        hide_titles()
+    if (changes["hide_titles"]) {
+        if (!hide_titles_value["hide_titles"]) {
+            title_observer.disconnect()
+            location.reload(); 
+        } else {
+            title_observer.observe(document,title_config);
+            hide_titles()
+        }
     }
 })
 

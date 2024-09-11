@@ -28,15 +28,17 @@ const thumb_callback = (mutationList, _thumb_observer) => {
 };
 
 // Whenever the setting has changed (someone clicked on the action icon) shows or hides thumbnails
-browser.storage.local.onChanged.addListener(async (_changes) => {
+browser.storage.local.onChanged.addListener(async (changes) => {
     let hide_thumbs = await browser.storage.local.get("hide_thumbs")
 
-    if (!hide_thumbs["hide_thumbs"]) {
-        thumb_observer.disconnect()
-        show_thumbnails()
-    } else {
-        thumb_observer.observe(document,thumb_config);
-        hide_thumbnails()
+    if (changes["hide_thumbs"]) {
+        if (!hide_thumbs["hide_thumbs"]) {
+            thumb_observer.disconnect()
+            show_thumbnails()
+        } else {
+            thumb_observer.observe(document,thumb_config);
+            hide_thumbnails()
+        }
     }
 })
 
