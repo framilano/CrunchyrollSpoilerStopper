@@ -1,31 +1,43 @@
 function setIconBasedOnStorage(hide_thumbs, hide_titles) {
-    if (hide_thumbs == false && hide_titles == false)
-        browser.browserAction.setIcon({ path: "icons/icon_off-128.png" });
-    if (hide_thumbs == true || hide_titles == true)
-            browser.browserAction.setIcon({ path: "icons/icon_mid-128.png" });
-    if (hide_thumbs == true && hide_titles == true)
-        browser.browserAction.setIcon({ path: "icons/icon-128.png" });
-}
-
-function loadSettings() {
-    console.log("Loading settings!")
-    gettingStoredSettings = browser.storage.local.get();
-    gettingStoredSettings.then((settings) => {
-        if (settings == null || settings == undefined || JSON.stringify(settings) === '{}') {
-            browser.storage.local.set(
-                { 
-                    hide_thumbs: true,
-                    hide_titles: true
-                }
-            )
+    console.log("[setIconBasedOnStorage START] [hide_thumbs = %s | hide_titles = %s]", hide_thumbs, hide_titles)
+    let suffix = ""
+    if (hide_thumbs == false && hide_titles == false) suffix = "_off"
+    if (hide_thumbs == true || hide_titles == true) suffix = "_mid"
+    if (hide_thumbs == true && hide_titles == true) suffix = ""
+    
+    browser.action.setIcon({
+        path: {
+            19: 'icons/icon' + suffix + '19.png',
+            38: 'icons/icon' + suffix + '38.png',
+            128: 'icons/icon' + suffix + '128.png'
         }
-        console.log(settings)
-        setIconBasedOnStorage(settings.hide_thumbs, settings.hide_titles)
     })
 }
 
-browser.storage.local.onChanged.addListener((changes) => {
-    setIconBasedOnStorage(changes['hide_thumbs'].newValue, changes['hide_titles'].newValue)
+async function loadSettings() {
+    console.debug("[loadSettings START]")
+    let hide_thumbs = await browser.storage.local.get("hide_thumbs")
+    let hide_titles = await browser.storage.local.get("hide_titles")
+    if (hide_titles["hide_titles"] == undefined) {
+        browser.storage.local.set(
+            { 
+                hide_thumbs: true,
+                hide_titles: true
+            }
+        )
+    } else {
+        setIconBasedOnStorage(hide_thumbs["hide_thumbs"], hide_titles["hide_titles"])
+    }
+    console.info("[loadSettings STOP]")
+
+}
+
+browser.storage.local.onChanged.addListener(async (_changes) => {
+    console.debug("Changed localStorage!")
+    let hide_thumbs = await browser.storage.local.get("hide_thumbs")
+    let hide_titles = await browser.storage.local.get("hide_titles")
+    setIconBasedOnStorage(hide_thumbs["hide_thumbs"], hide_titles["hide_titles"])
+    console.info("Icons changed")
 })
 
 //Listen for installed event, first initialization

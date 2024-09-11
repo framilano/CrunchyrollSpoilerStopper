@@ -18,34 +18,31 @@ function show_thumbnails() {
 }
 
 // When mutations on DOM are observed, useful when loading new divs containing classes to hide
-const thumb_callback = (mutationList, thumb_observer) => {
+const thumb_callback = (mutationList, _thumb_observer) => {
     for (const mutation of mutationList) {
-        if(mutation.target.className.includes("playable-thumbnail")) continue;
-        if(mutation.target.className.includes("playable-card__title-link")) continue;
-        if(mutation.target.className.includes("playable-card-mini-static__title-link")) continue;
-        
-        hide_thumbnails();
+        if (!(typeof mutation.target.className == "string") ||
+            mutation.target.className.includes("playable-card")
+        ) continue
+        else hide_thumbnails()
     }
 };
 
-// Whenever the setting has changed (someone clicked on the browserAction icon) shows or hides thumbnails
-browser.storage.local.onChanged.addListener((changes) => {
-    if (changes['changed'].newValue == "thumbs") {
-        if (!changes['hide_thumbs'].newValue) {
-            thumb_observer.disconnect()
-            show_thumbnails()
-        }
-        
-        if (changes['hide_thumbs'].newValue) {
-            thumb_observer.observe(document,thumb_config);
-            hide_thumbnails()
-        }
+// Whenever the setting has changed (someone clicked on the action icon) shows or hides thumbnails
+browser.storage.local.onChanged.addListener(async (_changes) => {
+    let hide_thumbs = await browser.storage.local.get("hide_thumbs")
+
+    if (!hide_thumbs["hide_thumbs"]) {
+        thumb_observer.disconnect()
+        show_thumbnails()
+    } else {
+        thumb_observer.observe(document,thumb_config);
+        hide_thumbnails()
     }
 })
 
 
 // Options for the observer (which mutations to observe)
-const thumb_config = { attributes: true, childList: true, subtree: true };
+const thumb_config = { attributes: false, childList: true, subtree: true };
 
 // Create an observer instance linked to the callback function
 thumb_observer = new MutationObserver(thumb_callback);

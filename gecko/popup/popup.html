@@ -3,22 +3,27 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crunchyroll Spoiler Stopper</title>
     <link rel="stylesheet" href="popup.css">
-    <link href="https://fonts.cdnfonts.com/css/quebec" rel="stylesheet">
 
 <body class="dark-scheme">
-    <div class="container">
-        <span class="title" style="font-size: large;margin-bottom: 10%;">Crunchyroll Spoiler Stopper</span>
-        <input class="button1" type="checkbox" id="hide_titles" name="hide_titles" value="hide_titles">
-        <label class="label1" for="hide_titles"> Disable titles</label>
-        <input class="button2" type="checkbox" id="hide_thumbs" name="hide_thumbs" value="hide_thumbs">
-        <label class="label2" for="hide_thumbs"> Disable thumbnails</label>
+    <div>
+        <table>
+            <tr>
+                <th colspan="2"><span class="title">Crunchyroll Spoiler Stopper</span></th>
+            </tr>
+            <tr>
+                <th class = "checkbox"><input type="checkbox" id="hide_titles" name="hide_titles" value="hide_titles"></th>
+                <th class = "label"><label for="hide_titles"> Disable titles</label></th>
+            </tr>
+            <tr>
+                <th class = "checkbox"><input type="checkbox" id="hide_thumbs" name="hide_thumbs" value="hide_thumbs"></th>
+                <th class = "label"><label for="hide_thumbs"> Disable thumbnails</label></th>
+            </tr>
+        </table>
     </div>
 </body>
 
 </html>
-
 <script src="popup.js"></script>

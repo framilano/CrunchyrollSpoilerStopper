@@ -1,38 +1,42 @@
 {
-  "manifest_version": 2,
-  "name": "Crunchyroll Spoiler Stopper",
-  "version": "1.1.1",
-  "description": "Removes all thumbnails and titles while browsing crunchyroll.com",
-  "icons": {
-    "128": "icons/icon-128.png"
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://www.crunchyroll.com/*"
-      ],
-      "js": [
-        "content_scripts/thumbnails.js",
-        "content_scripts/titles.js"
-      ],
-      "css": [
-        "content_scripts/titles.css"
-      ]
-    }
-  ],
-  "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": false
-  },
-  "browser_action": {
-    "default_icon": {
-      "128": "icons/icon-128.png"
+    "name": "Crunchyroll Spoiler Stopper",
+    "version": "1.1.3",
+    "manifest_version": 3,
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{b198c969-47fe-4ec4-a769-27e9106e9cd8}"
+        }
     },
-    "default_popup": "popup/popup.html"
-  },
-  "permissions": [
-    "storage"
-  ]
+    "description": "Removes all thumbnails and titles while browsing crunchyroll.com",
+    "icons": {
+        "128": "icons/icon128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.crunchyroll.com/*"
+            ],
+            "js": [
+                "content_scripts/thumbnails.js",
+                "content_scripts/titles.js"
+            ],
+            "css": [
+                "content_scripts/titles.css"
+            ]
+        }
+    ],
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "action": {
+        "default_icon": {
+            "19": "icons/icon19.png",
+            "38": "icons/icon38.png",
+            "128": "icons/icon128.png"
+        },
+        "default_popup": "popup/popup.html"
+    },
+    "permissions": [
+        "storage"
+    ]
 }
