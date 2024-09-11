@@ -16,10 +16,10 @@ function setIconBasedOnStorage(hide_thumbs, hide_titles) {
 
 async function loadSettings() {
     console.debug("[loadSettings START]")
-    let hide_thumbs = await chrome.storage.local.get("hide_thumbs")
-    let hide_titles = await chrome.storage.local.get("hide_titles")
+    let hide_thumbs = await chrome.storage.sync.get("hide_thumbs")
+    let hide_titles = await chrome.storage.sync.get("hide_titles")
     if (hide_titles["hide_titles"] == undefined) {
-        chrome.storage.local.set(
+        chrome.storage.sync.set(
             { 
                 hide_thumbs: true,
                 hide_titles: true
@@ -32,10 +32,10 @@ async function loadSettings() {
 
 }
 
-chrome.storage.local.onChanged.addListener(async (_changes) => {
+chrome.storage.sync.onChanged.addListener(async (_changes) => {
     console.debug("Changed localStorage!")
-    let hide_thumbs = await chrome.storage.local.get("hide_thumbs")
-    let hide_titles = await chrome.storage.local.get("hide_titles")
+    let hide_thumbs = await chrome.storage.sync.get("hide_thumbs")
+    let hide_titles = await chrome.storage.sync.get("hide_titles")
     setIconBasedOnStorage(hide_thumbs["hide_thumbs"], hide_titles["hide_titles"])
     console.info("Icons changed")
 })

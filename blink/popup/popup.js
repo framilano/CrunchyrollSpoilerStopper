@@ -2,7 +2,7 @@ const titles_box = document.getElementById("hide_titles")
 const thumbs_box = document.getElementById("hide_thumbs")
 
 titles_box.addEventListener('change', () => {
-    chrome.storage.local.set(
+    chrome.storage.sync.set(
         { 
             changed: "titles",
             hide_thumbs: thumbs_box.checked,
@@ -11,7 +11,7 @@ titles_box.addEventListener('change', () => {
     )
 })
 thumbs_box.addEventListener('change', () => {
-    chrome.storage.local.set(
+    chrome.storage.sync.set(
         { 
             changed: "thumbs",
             hide_thumbs: thumbs_box.checked,
@@ -21,10 +21,10 @@ thumbs_box.addEventListener('change', () => {
 })
 
 function loadSavedSettings() {
-    gettingStoredSettings = chrome.storage.local.get();
+    gettingStoredSettings = chrome.storage.sync.get();
     gettingStoredSettings.then((settings) => {
         if (settings == null || settings == undefined) {
-            chrome.storage.local.set(
+            chrome.storage.sync.set(
                 { 
                     hide_thumbs: true,
                     hide_titles: true
