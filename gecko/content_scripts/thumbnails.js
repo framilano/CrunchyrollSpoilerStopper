@@ -1,7 +1,8 @@
+thumbnails_regex = '[class^="playable-card__thumbnail"],[class*=" playable-card__thumbnail"]'
 
 // Hides thumbnails
 function hide_thumbnails() {
-    thumbnails = document.querySelectorAll('[class^="playable-thumbnail"],[class*=" playable-thumbnail"]');
+    thumbnails = document.querySelectorAll(thumbnails_regex);
     thumbnails.forEach(el => {
         el.style.display = "none"
         //el.style.visibility = "hidden";
@@ -10,7 +11,7 @@ function hide_thumbnails() {
 
 // Shows thumbnails
 function show_thumbnails() {
-    thumbnails = document.querySelectorAll('[class^="playable-thumbnail"],[class*=" playable-thumbnail"]');
+    thumbnails = document.querySelectorAll(thumbnails_regex);
     thumbnails.forEach(el => {
         el.style.display = "block"
         //el.style.visibility = "visible";
@@ -20,10 +21,7 @@ function show_thumbnails() {
 // When mutations on DOM are observed, useful when loading new divs containing classes to hide
 const thumb_callback = (mutationList, _thumb_observer) => {
     for (const mutation of mutationList) {
-        if (!(typeof mutation.target.className == "string") ||
-            mutation.target.className.includes("playable-card")
-        ) continue
-        else hide_thumbnails()
+        if ((typeof mutation.target.className == "string") && !mutation.target.className.includes("playable-card")) hide_thumbnails()
     }
 };
 

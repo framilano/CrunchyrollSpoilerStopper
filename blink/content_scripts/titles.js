@@ -1,11 +1,13 @@
-
-// Hides titles
-function hide_titles() {
-    titles = document.querySelectorAll(`
+titles_regex = `
     [class^="playable-card__title-link"],[class*=" playable-card__title-link"],
     [class^="playable-card-mini-static__title-link"],[class*=" playable-card-mini-static__title-link"],
     [class^="heading--"],[class*=" history-playable-card__title"]
-    `);
+`
+
+// Hides titles
+function hide_titles() {
+    titles = document.querySelectorAll(titles_regex);
+
     titles.forEach(el => {
         text_pieces = el.innerText.split(' ')
         if (text_pieces[1] == undefined || text_pieces[1] == 'undefined' || text_pieces[1] == '-')
@@ -18,12 +20,11 @@ function hide_titles() {
 // When mutations on DOM are observed, useful when loading new divs containing classes to hide
 const title_callback = (mutationList, _title_observer) => {
     for (const mutation of mutationList) {
-        if (!(typeof mutation.target.className == "string") ||
-            mutation.target.className.includes("playable-card") ||                  //All playable thumbnail titles
-            mutation.target.className.includes("heading") ||                        //Crunchyroll titles while watching a video
-            mutation.target.className.includes("history-playable-card__title")      //Crunchyroll history page titles
-        ) continue
-        else hide_titles()
+        if ((typeof mutation.target.className == "string") &&
+            !mutation.target.className.includes("playable-card") &&                  //All playable thumbnail titles
+            !mutation.target.className.includes("heading") &&                       //Crunchyroll titles while watching a video
+            !mutation.target.className.includes("history-playable-card__title")      //Crunchyroll history page titles
+        ) hide_titles()
     }
 };
 
