@@ -50,14 +50,11 @@ thumb_observer = new MutationObserver(thumb_callback);
 // Retrieving status from local storage when loading the site
 gettingStoredSettings = chrome.storage.sync.get();
 gettingStoredSettings.then((settings) => {
-    if (settings.hide_thumbs == null || settings.hide_thumbs == undefined) {
-        thumb_observer.observe(document,thumb_config);
-    }
-
-    if (settings.hide_thumbs == true) thumb_observer.observe(document, thumb_config);
-
-    if (settings.hide_thumbs == false) thumb_observer.disconnect()
-
+    if (settings.hide_thumbs == null || 
+        settings.hide_thumbs == undefined ||
+        settings.hide_thumbs == true
+    ) thumb_observer.observe(document,thumb_config);
+    else thumb_observer.disconnect()
 }, () => alert("ERROR"));
 
 

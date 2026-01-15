@@ -53,12 +53,9 @@ title_observer = new MutationObserver(title_callback);
 // Retrieving status from local storage when loading the site
 gettingStoredSettings = chrome.storage.sync.get();
 gettingStoredSettings.then((settings) => {
-    if (settings.hide_titles == null || settings.hide_titles == undefined) {
-        title_observer.observe(document,title_config);
-    }
-
-    if (settings.hide_titles == true) title_observer.observe(document, title_config);
-
-    if (settings.hide_titles == false) title_observer.disconnect()
-
+    if (settings.hide_titles == null || 
+        settings.hide_titles == undefined ||
+        settings.hide_titles == true) 
+            title_observer.observe(document,title_config);
+    else title_observer.disconnect()
 }, () => alert("ERROR"));
