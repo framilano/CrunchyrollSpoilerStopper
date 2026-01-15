@@ -1,4 +1,4 @@
-thumbnails_regex = '[class^="playable-card__thumbnail"],[class*=" playable-card__thumbnail"]'
+thumbnails_regex = '[class*="__thumbnail"]'
 
 // Hides thumbnails
 function hide_thumbnails() {
@@ -21,7 +21,7 @@ function show_thumbnails() {
 // When mutations on DOM are observed, useful when loading new divs containing classes to hide
 const thumb_callback = (mutationList, _thumb_observer) => {
     for (const mutation of mutationList) {
-        if ((typeof mutation.target.className == "string") && !mutation.target.className.includes("playable-card")) hide_thumbnails()
+        if (typeof mutation.target.className == 'string' && !mutation.target.className.includes("playable-card")) hide_thumbnails()   
     }
 };
 
