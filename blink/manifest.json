@@ -34,6 +34,10 @@
         "default_popup": "popup/popup.html"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "declarativeNetRequest"
+    ],
+    "host_permissions": [
+        "*://imgsrv.crunchyroll.com/*"
     ]
 }

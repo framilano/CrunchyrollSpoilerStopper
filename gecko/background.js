@@ -28,6 +28,10 @@ async function loadSettings() {
     } else {
         setIconBasedOnStorage(hide_thumbs["hide_thumbs"], hide_titles["hide_titles"])
     }
+
+    if (hide_thumbs["hide_thumbs"]) stopThumbnailLoading();
+    else startThumbnailLoading()
+
     console.info("[loadSettings STOP]")
 
 }
@@ -36,9 +40,48 @@ browser.storage.local.onChanged.addListener(async (_changes) => {
     console.debug("Changed localStorage!")
     let hide_thumbs = await browser.storage.local.get("hide_thumbs")
     let hide_titles = await browser.storage.local.get("hide_titles")
+    if (hide_thumbs["hide_thumbs"]) stopThumbnailLoading();
+    else startThumbnailLoading()
     setIconBasedOnStorage(hide_thumbs["hide_thumbs"], hide_titles["hide_titles"])
     console.info("Icons changed")
 })
+
+function stopThumbnailLoading() {
+    console.log("Started blocking thumbnails loading from URL")
+    const ruleId = 1001;
+    browser.declarativeNetRequest.getDynamicRules((rules) => {
+        const alreadyExists = rules.some(r => r.id === ruleId);
+        if (!alreadyExists) {
+            browser.declarativeNetRequest.updateDynamicRules({
+                addRules: [{
+                    id: ruleId,
+                    priority: 1,
+                    action: { type: "block" },
+                    condition: {
+                        urlFilter: "*cdn-cgi/image/fit=contain,format=auto,quality=70,width=800,height=450*",
+                        resourceTypes: ["image"]
+                    }
+                }],
+                removeRuleIds: []
+            });
+        }
+    });
+}
+
+function startThumbnailLoading() {
+    console.log("Removed thumbnails url load block")
+    const ruleId = 1001;
+    browser.declarativeNetRequest.getDynamicRules((rules) => {
+        const exists = rules.some(r => r.id === ruleId);
+
+        if (exists) {
+            browser.declarativeNetRequest.updateDynamicRules({
+                addRules: [],
+                removeRuleIds: [ruleId]
+            });
+        }
+    });
+}
 
 //Listen for installed event, first initialization
 browser.runtime.onInstalled.addListener(loadSettings);
